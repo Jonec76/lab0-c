@@ -16,6 +16,7 @@ queue_t *q_new()
     if (!q)
         return q;
     q->head = NULL;
+    q->tail = NULL;
     q->size = 0;
     return q;
 }
@@ -57,6 +58,9 @@ bool q_insert_head(queue_t *q, char *s)
     /* Don't forget to allocate space for the string and copy it */
     /* What if either call to malloc returns NULL? */
     q->size++;
+    if (q->size == 1) {
+        q->tail = newh;
+    }
     newh->next = q->head;
     q->head = newh;
     return true;
@@ -74,7 +78,35 @@ bool q_insert_tail(queue_t *q, char *s)
     /* TODO: You need to write the complete code for this function */
     /* Remember: It should operate in O(1) time */
     /* TODO: Remove the above comment when you are about to implement. */
-    return false;
+    list_ele_t *newt;
+    size_t len = strlen(s);
+    /* TODO: What should you do if the q is NULL? */
+    newt = malloc(sizeof(list_ele_t));
+    if (newt == NULL || q == NULL) {
+        free(newt);
+        return false;
+    }
+    char *value = malloc((len + 1) * sizeof(char));
+    if (value == NULL) {
+        free(newt);
+        free(value);
+        return false;
+    }
+    newt->value = value;
+    newt->next = NULL;
+    strncpy(newt->value, s, len + 1);
+    /* Don't forget to allocate space for the string and copy it */
+    /* What if either call to malloc returns NULL? */
+
+    q->size++;
+    if (q->size == 1) {
+        q->head = newt;
+        q->tail = newt;
+    } else {
+        q->tail->next = newt;
+        q->tail = newt;
+    }
+    return true;
 }
 
 /*
