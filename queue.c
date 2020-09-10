@@ -26,6 +26,21 @@ void q_free(queue_t *q)
 {
     /* TODO: How about freeing the list elements and the strings? */
     /* Free queue structure */
+    if (!q)
+        return;
+
+    if (q->head == NULL) {
+        free(q);
+        return;
+    }
+    do {
+        list_ele_t *tmp = q->head;
+        char *tmp_value = tmp->value;
+        q->head = q->head->next;
+        free(tmp_value);
+        free(tmp);
+    } while (q->head != NULL);
+
     free(q);
 }
 
