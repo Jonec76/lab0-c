@@ -93,5 +93,6 @@ void q_reverse(queue_t *q);
  * element, do nothing.
  */
 void q_sort(queue_t *q);
+list_ele_t *mergeSortList(list_ele_t *start, int l_idx, int r_idx);
 
 #endif /* LAB0_QUEUE_H */
